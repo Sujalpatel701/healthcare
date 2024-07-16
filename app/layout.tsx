@@ -12,7 +12,7 @@ const fontSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "CARE PLUS",
+  title: "PATEL CARE",
   description: "Healthcare system",
 };
 
