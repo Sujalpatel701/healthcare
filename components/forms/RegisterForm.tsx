@@ -28,6 +28,7 @@ import { Label } from "@radix-ui/react-select"
 import { Doctors, IdentificationTypes } from "@/constants"
 import { SelectItem } from "../ui/select"
 import {Genders} from "@/constants"
+import { FileUploader } from "../FileUploader"
 
 const formSchema = z.object({
   username: z.string().min(2, {
