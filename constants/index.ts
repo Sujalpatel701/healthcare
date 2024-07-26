@@ -15,7 +15,7 @@ export const PatientFormDefaultValues = {
   email: "",
   phone: "",
   birthDate: new Date(Date.now()),
-  gender: "Male" as Gender,
+  gender: "",
   address: "",
   occupation: "",
   emergencyContactName: "",
@@ -36,6 +36,7 @@ export const PatientFormDefaultValues = {
 };
 
 export const IdentificationTypes = [
+  "AADHAR Card",
   "Birth Certificate",
   "Driver's License",
   "Medical Insurance Card/Policy",
