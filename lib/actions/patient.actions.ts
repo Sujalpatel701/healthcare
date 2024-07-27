@@ -26,7 +26,7 @@ export const createUser = async (user: CreateUserParams) => {
       undefined,
       user.name
     );
-
+    console.log("newuser", newuser);
     return parseStringify(newuser);
   } catch (error: any) {
     // Check existing user
@@ -34,6 +34,7 @@ export const createUser = async (user: CreateUserParams) => {
       const existingUser = await users.list([
         Query.equal("email", [user.email]),
       ]);
+      console.log("ezistinguser", user);
 
       return existingUser.users[0];
     }
@@ -45,15 +46,11 @@ export const createUser = async (user: CreateUserParams) => {
 export const getUser = async (userId: string) => {
   try {
     const user = await users.get(userId);
-
     return parseStringify(user);
   } catch (error) {
-    console.error(
-      "An error occurred while retrieving the user details:",
-      error
-    );
+    console.log(error);
   }
-};
+};       
 
 // REGISTER PATIENT
 export const registerPatient = async ({

@@ -1,15 +1,13 @@
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
-import { getPatient, getUser } from "@/lib/actions/patient.actions";
+import { getUser } from "@/lib/actions/patient.actions";
 import RegisterForm from "@/components/forms/RegisterForm";
 
 const Register = async ({ params: { userId } }: SearchParamProps) => {
   const user = await getUser(userId);
-  const patient = await getPatient(userId);
-
-  if (patient) redirect(`/patients/${userId}/new-appointment`);
-
+  console.log("page-->", user);
+  
   return(
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container">

@@ -25,7 +25,7 @@ import { FormFieldType } from "./PatientForm"
 import Image from "next/image";
 
 import { Label } from "@radix-ui/react-select"
-import { Doctors, IdentificationTypes } from "@/constants"
+import { Doctors, IdentificationTypes, PatientFormDefaultValues } from "@/constants"
 import { SelectItem } from "../ui/select"
 import {Genders} from "@/constants"
 import { FileUploader } from "../FileUploader"
@@ -37,23 +37,26 @@ const formSchema = z.object({
 })
  
 const RegisterForm = ({ user }: { user: User }) => {
+  console.log("reg", user);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof PatientFormValidation>>({
     resolver: zodResolver(PatientFormValidation),
     defaultValues: {
-      ...PatientFormValidation,
-      name: "",
-      email: "",
-      phone: "",
+      ...PatientFormDefaultValues,
+      name: user?.name || "",
+      email: user?.email || "",
+      phone: user?.phone || "",
     },
-  })
+  });
+
  
   // 2. Define a submit handler.
- async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
+  const onSubmit = async (values: z.infer<typeof PatientFormValidation>) => {
     setIsLoading(true);
 
+    // Store file info in form data as
     let formData;
     if (
       values.identificationDocument &&
@@ -94,19 +97,20 @@ const RegisterForm = ({ user }: { user: User }) => {
           : undefined,
         privacyConsent: values.privacyConsent,
       };
-       
+
       const newPatient = await registerPatient(patient);
 
       if (newPatient) {
         router.push(`/patients/${user.$id}/new-appointment`);
       }
-
     } catch (error) {
-      console.error(error)
+      console.log(error);
     }
-    setIsLoading(false);
 
+    setIsLoading(false);
   };
+
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex-1">
